@@ -1,6 +1,6 @@
 body {
 	font-family: "Times New Roman", Times, serif;
-	background-image: url("image.png");
+	background-image: url("res/explosion.png");
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
