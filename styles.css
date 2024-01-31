@@ -10,3 +10,11 @@ body {
 	margin-right: auto;
 	max-width: 960px;
 }
+.link {
+	color: black;
+	text-decoration: underline;
+}
+
+.link:hover{
+	color: white;
+}
