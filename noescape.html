@@ -23,6 +23,16 @@
 			transform: translate(-30%, 0);
 			font-size: 1.2rem;
 		}
+
+		#return {
+			color: black;
+			text-decoration: underline;
+		}
+		#return:hover {
+			color: white;
+			cursor: pointer;
+		}
+
 		#textContain {
 			width: 2500px;
 			height: 500px;
@@ -36,14 +46,6 @@
     		color: black;
 			opacity: 0;
 		}
-		#return {
-			color: black;
-			text-decoration: underline;
-		}
-		#return:hover{
-			color: white;
-			cursor: pointer;
-		}
 
 		#text.in {
 			opacity: 1;
@@ -51,7 +53,7 @@
 
 		#text.fadeOut {
   			opacity: 0;
-  			transition: 1s;
+  			transition: 0.5s;
 		}
 
 	</style>
@@ -63,7 +65,7 @@
 			text.classList.toggle('in');
 			setTimeout(function(){
 				text.classList.toggle('fadeOut');
-			}, 1000);
+			}, 1500);
 		}
 	</script>
 	<div id="textContain">
