@@ -23,6 +23,16 @@
 			transform: translate(-30%, 0);
 			font-size: 1.2rem;
 		}
+
+		#return {
+			color: floralwhite;
+			text-decoration: underline;
+		}
+		#return:hover {
+			color: lightgray;
+			cursor: pointer;
+		}
+
 		#textContain {
 			width: 2500px;
 			height: 500px;
@@ -36,14 +46,6 @@
     		color: black;
 			opacity: 0;
 		}
-		#return {
-			color: black;
-			text-decoration: underline;
-		}
-		#return:hover{
-			color: white;
-			cursor: pointer;
-		}
 
 		#text.in {
 			opacity: 1;
@@ -51,26 +53,19 @@
 
 		#text.fadeOut {
   			opacity: 0;
-  			transition: 1s;
+  			transition: 0.5s;
 		}
 
 	</style>
 </head>
 <body>
 	<script type="text/javascript">
-		var i = 0;
-
-
 		function appear() {
 			let text = document.getElementById('text');
-				text.classList.remove("fadeOut");
-				text.classList.add("in");
-				
-				setTimeout(function(){
-					text.classList.remove("in");
-					text.classList.add("fadeOut");
-				}, 1000);
-
+				text.classList.toggle('in');
+			setTimeout(function(){
+				text.classList.toggle('fadeOut');
+			}, 1500);
 		}
 	</script>
 	<div id="textContain">
