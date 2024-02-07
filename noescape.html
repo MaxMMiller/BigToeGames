@@ -60,12 +60,18 @@
 </head>
 <body>
 	<script type="text/javascript">
+		var i = 0;
+
 		function appear() {
-			let text = document.getElementById('text');
-				text.classList.toggle('in');
-			setTimeout(function(){
-				text.classList.toggle('fadeOut');
-			}, 1500);
+			let text = document.getElementById('noescape');
+				text.classList.remove('fadeOut');
+				text.classList.add('in');		
+				
+				setTimeout(function(){
+					text.classList.remove('in');
+					text.classList.add('fadeOut');
+				}, 1000);
+
 		}
 	</script>
 	<div id="textContain">
