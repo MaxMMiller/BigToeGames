@@ -11,6 +11,7 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	max-width: 960px;
+	text-align: center;
 }
 .link {
 	color: black;
@@ -23,4 +24,10 @@ body {
 .title {
 	border: 5px solid black;
 	border-radius: 5px;
+}
+.gameTitle {
+	background-color: black;
+	border: 3px solid black;
+	border-radius: 5px;
+	color: white;
 }
