@@ -24,6 +24,8 @@ body {
 .title {
 	border: 5px solid black;
 	border-radius: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
 }
 .gameTitle {
 	background-color: black;
