@@ -29,7 +29,6 @@ body {
 .gameTitle {
 	background-color: black;
 	border: 3px solid black;
-	border-radius: 5px;
 	color: white;
 	max-width: 200px;
 	text-align: center;
