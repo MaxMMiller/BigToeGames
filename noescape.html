@@ -60,13 +60,14 @@
 </head>
 <body>
 	<script type="text/javascript">
-		var i = 0;
+		var i = 6;
 
 		function appear() {
 			let text = document.getElementById('noescape');
 				text.classList.remove('fadeOut');
-				text.classList.add('in');		
-				
+				text.classList.add('in');
+				text.style.fontSize = i + "rem";		
+				i += 1;
 				setTimeout(function(){
 					text.classList.remove('in');
 					text.classList.add('fadeOut');
