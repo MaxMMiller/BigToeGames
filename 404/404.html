@@ -5,17 +5,16 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>404 - WIZARDS BIG TOE</title>
-	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="../styles.css">
 </head>
-<body>
+<body onload="init()">
 <div id="wrap">
 	<div style="text-align: center;">
-		<br><br><br><br><br>
-		<h1>umm... <br>idk what youre trying to do but this is not a real page.<br> come on.<br> get with the program</h1>
+		<br>
+		<h1>umm... <br>idk what youre trying to do but this is not a real page.<br> come on.<br>heres a game ig</h1>
 		<br><br>
-		<div onload="init()" style="text-align: center;">
-    <canvas id="canvas"width="550" height="500" style="border:2px solid #c3c3c3;margin-left: auto; margin-right: auto;"> Your browser does not support the canvas element.</canvas>
-    <script>
+    <canvas id="canvas"width="550" height="500" style="border:3px solid #c3c3c3;margin-left: auto; margin-right: auto;"> Your browser does not support the canvas element.</canvas>
+<script>
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
   var goUp, goDown, goLeft, goRight;
@@ -325,6 +324,8 @@
   function paint(){
     //Clearing the Canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
   
     ////////////////////////////////////////
     //If scene 1 is active then this runs
@@ -373,15 +374,15 @@
       //Title
       ctx.fillStyle = 'black';
       ctx.font = "60px Arial";
-      ctx.textAlign = "center"
+      ctx.textAlign = "center";
       ctx.fillText("Score: " + score, 240, 75);
     }
   }
 
 </script>
-
-  </div>
+		<br><br><br><div style="text-align: center;">
 		<a class="link" href="https://evilwizardstuff.com/">RETURN TO WIZARD</a>
+	</div>
 	</div>
 </div>
 </body>
