@@ -37,3 +37,6 @@ body {
 	padding-right: 5px;
 	margin-bottom: 5px;
 }
+.columnItem {
+			border: 2px solid black;
+}
