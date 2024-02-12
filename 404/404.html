@@ -13,6 +13,374 @@
 		<br><br><br><br><br>
 		<h1>umm... <br>idk what youre trying to do but this is not a real page.<br> come on.<br> get with the program</h1>
 		<br><br>
+		<div onload="init()" style="text-align: center;">
+    <canvas id="canvas"width="550" height="500" style="border:2px solid #c3c3c3;margin-left: auto; margin-right: auto;"> Your browser does not support the canvas element.</canvas>
+    <script>
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
+  var goUp, goDown, goLeft, goRight;
+  var s1Active = true, s2Active, allowMove = true;
+  //The current active level
+  var score =0;
+  //The amount the enemy walls move up or down
+  var heightIncrease =0;
+  //the counter of how much points until speed increases
+  var increaseCount = 10;
+  //The player object
+  var player = {
+    x: 50,
+    y: 50,
+    width: 50,
+    height: 50,
+    speed: 10,
+    color: '#03b6fc',
+  };
+  //the object of the starting button
+  var startBtn = {
+    x: 200,
+    y: 350,
+    width: 150,
+    height: 75,
+    color: 'grey',
+    text: "Start",
+    font: "30px Arial"
+  }
+  //the upper red wall
+  var wall1 = {
+    //x: 300,
+    x: 400,
+    y: -200,
+    width: 50,
+    height: 500,
+    speed: 1,
+    color: 'red',
+  }
+  //the lower red wall
+  var wall2 = {
+    //x: 300,
+    x: 400,
+    y: 400,
+    width: 50,
+    height: 500,
+    speed: 1,
+    color: 'darkred',
+  }
+  //the wall at the end that brings you to the next scene
+  var end = {
+    x: 500,
+    y: 0,
+    width: 50,
+    height: 500,
+    color: 'lightgrey',
+  }
+  //the position of where the mouse clicked
+  var mouseClk = {
+    x: 0,
+    y: 0,
+    width: 1,
+    height: 1,
+  }
+
+  //Checks when the key is pressed and starts the movement of the player
+  document.addEventListener('keydown', (e) => {
+    // if the 'd' is pressed
+    if (e.key == 'd' || e.key == 'D' || e.key == 'ArrowRight') {
+      goRight = true;
+      e.preventDefault();
+    }
+    // if the 'a' is pressed
+    if (e.key == 'a' || e.key == 'A' || e.key == 'ArrowLeft') {
+      goLeft = true;
+      e.preventDefault();
+    }
+    // if the 'w' is pressed
+    if (e.key == 'w' || e.key == 'W' || e.key == 'ArrowUp') {
+      goUp = true;
+      e.preventDefault();
+    }
+    // if the 's' is pressed
+    if (e.key == 's' || e.key == 'S' || e.key == 'ArrowDown') {
+      goDown = true;
+      e.preventDefault();
+    }
+  }, false);
+
+
+  // When the key is released the player stops movement
+  document.addEventListener('keyup', (e) => {
+    // if the 'd' is pressed
+    if (e.key == 'd' || e.key == 'D' || e.key == 'ArrowRight') {
+      goRight = false;
+      e.preventDefault();
+    }
+    // if the 'a' is pressed
+    if (e.key == 'a' || e.key == 'A' || e.key == 'ArrowLeft') {
+      goLeft = false;
+      e.preventDefault();
+    }
+    // if the 'w' is pressed
+    if (e.key == 'w' || e.key == 'W' || e.key == 'ArrowUp') {
+      goUp = false;
+      e.preventDefault();
+    }
+    // if the 's' is pressed
+    if (e.key == 's' || e.key == 'S' || e.key == 'ArrowDown') {
+      goDown = false;
+      e.preventDefault();
+    }
+  }, false);
+
+//Checks when the mouse is pressed
+  document.addEventListener('mousedown', (e) => {
+    var clientRect = canvas.getBoundingClientRect();
+    mouseClk.x = (e.clientX - clientRect.left) / (clientRect.right - clientRect.left) * canvas.width;
+    mouseClk.y = (e.clientY - clientRect.top) / (clientRect.bottom - clientRect.top) * canvas.height;
+    if(collision(mouseClk, startBtn)){
+      start();
+    }
+  }, false);
+
+  //When the page loads a clock starts to run 45 times every second which runs the update function that holds game logic
+  function init(){
+    setInterval(update, 1000/45);
+  }
+
+  //Functions moving the player different directions
+  function moveRight(){ //right
+    if(player.x<=(500-player.speed)){
+    player.x+= player.speed;
+    }
+  }
+
+  function moveLeft(){ //left
+    if(player.x>=(0+player.speed)){
+    player.x-= player.speed;
+    }
+  }
+
+  function moveDown(){ //down
+    if(player.y<=(450-player.speed)){
+    player.y+= player.speed;
+    }
+  }
+
+  function moveUp(){ //up
+    if(player.y>=(0+player.speed)){
+    player.y-= player.speed;
+    }
+  }
+
+  //This function is called when the player dies
+  function die(){
+    wall1.x = 400;
+    wall2.x = 400;
+    player.x = 50;
+    player.y = 50;
+    score = 1;
+    wall1.y = Math.round((Math.random()*400) -500);
+    wall2.y = wall1.y + wall1.height + 100;
+    wall1.speed = 1;
+    wall2.speed = wall1.speed;
+    wall1.color = 'red';
+    wall2.color = 'darkred';
+  }
+
+  //This function is called 45 times a second and updates game logic and calls the paint function
+  function update(){
+    //If the player is allowed to move
+    if(allowMove){
+    //Player Movement
+    if(goRight){
+      moveRight();
+    }
+    if(goLeft){
+      moveLeft();
+    }
+    if(goUp){
+      moveUp();
+    }
+    if(goDown){
+      moveDown();
+    }
+    }
+    /////////////////////////////////
+    //Only run when scene 1 is active
+    if(s1Active){
+    //When player collides with the start button
+    if (collision(player, startBtn)){
+      start();
+    }
+    }
+    /////////////////////////////////
+    //Only run when scene 2 is active
+    /////////////////////////////////
+    if(s2Active){
+      //Makes sure that the hole in the wall does not go off the screen
+      if(wall2.y>=500){
+        heightIncrease = 0;
+        wall2.y = 500;
+        wall1.y = 400 - wall1.height;
+      }
+      if((wall1.y + wall1.height)<=0){
+        heightIncrease = 0;
+        wall1.y= -500;
+        wall2.y= wall1.y + wall1.height + 100;
+      }
+      //Moves the red walls accross the screen
+      wall1.x -= wall1.speed;
+      wall2.x = wall1.x;
+      //moves the red walls up and down when score is 5 or moveRight
+        if(score>=5){
+        wall1.y += heightIncrease;
+        wall2.y = wall1.y + wall2.height + 100;
+      }
+      //if the player collides with the upper or lower walls his position is reset and score
+      if(collision(player, wall1) || collision(player, wall2)){
+        die();
+      }
+      //if the player collides with the end wall
+      if(collision(player, end)){
+        wall1.x = 400;
+        wall2.x = 400;
+        player.x = 50;
+        player.y = 50;
+        score++;
+        wall1.y = Math.round((Math.random()*400) -500);
+        wall2.y = wall1.y + wall1.height + 100;
+        //increases red wall speed if score is 3
+        if(score == 3){
+          wall1.speed++;
+          wall2.speed++;
+        }
+        //Increases speed every 10 levels
+        if(increaseCount<=10 && increaseCount>0){
+          increaseCount--;
+        }else{
+          increaseCount = 10;
+          wall1.speed+=0.5;
+          wall2.speed+=0.5;
+        }
+        //random amount of height increase or decrease
+        heightIncrease = Math.round((Math.random()*wall1.speed) -wall1.speed/2);
+      }
+      //Changes enemy wall color based on score
+      if(score==5){
+        wall1.color = 'blue';
+        wall2.color = wall1.color;
+      }
+      if(score==10){
+        wall1.color = 'yellow';
+        wall2.color = wall1.color;
+      }
+      if(score==15){
+        wall1.color = 'orange';
+        wall2.color = wall1.color;
+      }
+      if(score==20){
+        wall1.color = 'green';
+        wall2.color = wall1.color;
+      }
+      if(score==25){
+        wall1.color = '#7FFFD4';
+        wall2.color = wall1.color;
+      }
+      if(score==30){
+        wall1.color = '#8A2BE2';
+        wall2.color = wall1.color;
+      }
+      if(score==35){
+        wall1.color = '#B22222';
+        wall2.color = wall1.color;
+      }
+      if(score==40){
+        wall1.color = '#ADFF2F';
+        wall2.color = wall1.color;
+      }
+      if(score==45){
+        wall1.color = '#EE82EE';
+        wall2.color = wall1.color;
+      }
+      if(score==50){
+        wall1.color = '#FFD700';
+        wall2.color = wall1.color;
+      }
+    }
+    //Updating Screen Visuals
+    paint();
+  }
+
+  //collision Function
+  function collision(obj1, obj2) {
+    return obj1.x + obj1.width > obj2.x && obj1.y + obj1.height > obj2.y && obj1.y < obj2.y + obj2.height && obj1.x < obj2.x + obj2.width;
+  }
+
+  //When the start button is touched
+  function start(){
+    s1Active = false;
+    s2Active = true;
+    player.x = 50;
+    player.y = 50;
+  }
+  //clears the canvas and repaints the objects on the screen
+  function paint(){
+    //Clearing the Canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+    ////////////////////////////////////////
+    //If scene 1 is active then this runs
+    ///////////////////////////////////////
+    if(s1Active){
+    //The Player
+    ctx.fillStyle = player.color;
+    ctx.fillRect(player.x,player.y,player.width,player.height);
+    //Title
+    ctx.fillStyle = 'black';
+    ctx.font = "60px Arial";
+    ctx.textAlign = "center"
+    ctx.fillText("Bob The Square", 260, 75);
+    //Start Button
+    ctx.fillStyle = startBtn.color;
+    ctx.fillRect(startBtn.x, startBtn.y,startBtn.width,startBtn.height);
+    //StartBtn Text
+    ctx.textAlign = "left";
+    ctx.fillStyle = "black";
+    ctx.font = "60px Arial";
+    ctx.font = startBtn.font;
+    ctx.fillText(startBtn.text, startBtn.x+40, startBtn.y+45);
+    //Help Text
+    ctx.textAlign = "left";
+    ctx.fillStyle = "lightgrey";
+    ctx.font = "20px Arial";
+    ctx.font = startBtn.font;
+    ctx.fillText("Move with WASD or Arrow Keys", 75, 200);
+    }
+    //////////////////////////////////////////
+    //If scene 2 is active then this runs
+    /////////////////////////////////////////
+    if(s2Active){
+      //Wall 1
+      ctx.fillStyle = wall1.color;
+      ctx.fillRect(wall1.x, wall1.y, wall1.width, wall1.height);
+      //Wall 2
+      ctx.fillStyle = wall2.color;
+      ctx.fillRect(wall2.x, wall2.y, wall2.width, wall2.height);
+      //The end on the side
+      ctx.fillStyle = end.color;
+      ctx.fillRect(end.x, end.y, end.width, end.height);
+      //The Player
+      ctx.fillStyle = player.color;
+      ctx.fillRect(player.x,player.y,player.width,player.height);
+      //Title
+      ctx.fillStyle = 'black';
+      ctx.font = "60px Arial";
+      ctx.textAlign = "center"
+      ctx.fillText("Score: " + score, 240, 75);
+    }
+  }
+
+</script>
+
+  </div>
 		<a class="link" href="https://evilwizardstuff.com/">RETURN TO WIZARD</a>
 	</div>
 </div>
