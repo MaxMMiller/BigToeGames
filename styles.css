@@ -1,4 +1,6 @@
 html {
+	width: 100%;
+	height: 100%;
 	background-image: url("res/explosion.png");
 	background-position: center;
 	background-repeat: repeat;
