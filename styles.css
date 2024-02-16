@@ -23,9 +23,6 @@ body {
 }
 .title {
 	border: 5px solid black;
-	margin-left: 5px;
-	margin-right: 5px;
-	max-height: 200px;
 	display: block;
 	margin-top: 0%;
 }
