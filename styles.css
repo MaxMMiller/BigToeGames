@@ -40,5 +40,28 @@ body {
 	margin-bottom: 5px;
 }
 .columnItem {
-			border: 2px solid black;
+	border: 2px solid black;
+}
+.noHover:hover{
+	border: 2px solid black;
+}
+.noHover:hover figcaption{
+	background-color: black;
+  	color: white;
+}
+figure {
+	border: 2px solid black;
+}
+figure:hover {
+	border: 2px solid white;			
+}
+figcaption {
+  	background-color: black;
+  	color: white;
+  	padding: 1px;
+  	text-align: center;
+}
+figure:hover figcaption{
+	background-color: white;
+  	color: black;
 }
